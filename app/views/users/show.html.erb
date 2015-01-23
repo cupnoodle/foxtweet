@@ -1,0 +1,65 @@
+<% if @user %>
+  <div class="userprofile">
+  <%= image_tag(@user.avatar_url.to_s + ".png", size: "128x128", alt: "Profile picture") %>
+    <%= link_to(@user.username, class: "name") do %> <%= @user.name %> <% end %>  
+    <%= link_to(@user.username, class: "username") do %>@<%= @user.username %> <% end %>
+
+    <br>
+        <% if(@user.description) %>
+      <%= @user.description %>
+    <% end %>
+    <br>
+    
+  
+    <br>
+    <% if @user.username != session[:username] %>
+      <%= form_for(@user, :method => :post, :url => {:action => 'follow'}) do |f| %>
+        <% if !@user.followers.include?(@myself) %>
+          <%= submit_tag('Follow', class: "btn btn-default") %>
+        <% else %>
+          <%= submit_tag('Unfollow', class: "btn btn-primary") %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= link_to("Edit Profile", {action: "edit" } ,{class: "btn btn-success"}) %>
+    <% end %>
+    <br><br>
+    <b>
+      <%= link_to({action: "follower", username: session[:username]}, {style: "color: #222;"}) do %>
+        <%= pluralize(@user.followers.count, 'follower') %>
+      <% end %>
+    </b> 
+    <%= link_to({action: "following", username: session[:username]}, {style: "color: #222;"}) do %>
+      <%= pluralize(@user.followeds.count, 'following') %>
+    <% end %>
+  </div>
+  <div id="stream">
+  
+    <% @tweets.each do |tweet| %>
+    <div class="tweet">
+      <div class="avatar">
+        <%= image_tag(tweet.user.avatar_url.to_s + ".png", size: "50x50", alt: "Profile picture") %>
+      </div>
+      <div class="info">
+        <%= link_to(@user.username) do %>
+          <span class="username"><%= @user.name %></span> <span class="poster">@<%= @user.username %> &middot; </span>
+        <% end %>
+        <%= link_to(tweet,class: "poster" ) do %>
+          <%= time_ago_in_words(tweet.created_at) %> ago
+        <% end %>
+      </div>
+      <div class="content">
+        <%= truncate(tweet.content, :length => 150, :omission => "...") %>
+      </div>
+      <% if @user.username == session[:username] %>
+        <div class="close-btn">
+          <%= link_to raw("<i class='fa fa-close'></i>"), tweet_path(tweet), method: :delete, data: { confirm: 'Confirm delete this   tweet?' } %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+  
+  </div>
+<% else %>
+  This user does not exist
+<% end %>

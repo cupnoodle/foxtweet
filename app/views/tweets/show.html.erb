@@ -1,0 +1,23 @@
+<div id="stream">
+
+<% if @tweet %>
+  <div class="tweet">
+    <div class="avatar">
+      <%= image_tag("1.png", size: "50x50", alt: "Profile picture") %>
+    </div>
+    <div class="info">
+      <%= link_to({controller: "users", action: "show", username: @tweet.user.username}) do %>
+        <span class="username"><%= @tweet.user.name %></span> <span class="poster">@<%= @tweet.user.username %> &middot; </span>
+      <% end %>
+      <%= link_to(@tweet,class: "poster" ) do %>
+        <%= time_ago_in_words(@tweet.created_at) %> ago
+      <% end %>
+    </div>
+    <div class="content">
+      <%= @tweet.content %>
+    </div>
+  </div>
+<% else %>
+ Tweet does not exist
+<% end %>
+</div>

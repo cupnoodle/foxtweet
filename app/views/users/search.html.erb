@@ -1,0 +1,16 @@
+<% #in case user enter /search in url, @matches will be checked if is nil first before check count %>
+<h3> Search for : '<%= @term %>' </h3>
+<% if @matches && @matches.count > 0 %>
+  <% @matches.each do |match| %>
+    <div class="userprofile">
+    <%= image_tag(match.avatar_url.to_s + ".png", size: "128x128", alt: "Profile picture") %>
+      <%= link_to({:controller => "users", :action=> "show" , :username => match.username}, {class: "name"}) do %> <%= match.name %> <% end %> 
+      <br>
+      <%= link_to({:controller => "users", :action=> "show" , :username => match.username}, {class: "username"}) do %>@<%= match.username %> <% end %>
+      <br><br>
+      <br><br><br>
+    </div>
+  <% end %>
+<% else %>
+ <span>No match found </span>
+<% end %>

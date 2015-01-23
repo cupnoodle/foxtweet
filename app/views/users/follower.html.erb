@@ -1,0 +1,24 @@
+<h2> My Followers </h2><br>
+<% if @followers && @followers.count > 0 %>
+  <% @followers.each do |follower| %>
+    <div class="userprofile">
+    <%= image_tag(follower.avatar_url.to_s + ".png", size: "128x128", alt: "Profile picture") %>
+      <%= link_to({:controller => "users", :action=> "show" , :username => follower.username}, {class: "name"}) do %> <%= follower.name %> <% end %> 
+      <br>
+      <%= link_to({:controller => "users", :action=> "show" , :username => follower.username}, {class: "username"}) do %>@<%= follower.username %> <% end %>
+      <br><br>
+      <% if follower.username != session[:username] %>
+        <%= form_for(follower, :method => :post, :url => {:action => 'follow', :username => follower.username}) do |f| %>
+          <% if !follower.followers.include?(@myself) %>
+            <%= submit_tag('Follow', class: "btn btn-default") %>
+          <% else %>
+            <%= submit_tag('Unfollow', class: "btn btn-primary") %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+<% else %>
+ <span>No follower TwT </span>
+<% end %>

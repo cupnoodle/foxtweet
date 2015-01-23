@@ -1,0 +1,38 @@
+<div class="tweet">
+  <div class="post_avatar">
+    <%= image_tag("1.png", alt: "Profile picture") %>
+  </div>
+  <div class="content">
+    <%= form_for(:tweet, :url => {:action => "create"}, :html => {class: "form-div"} ) do |f|  %>
+      <%= f.text_area :content, placeholder: "What's on your mind?" , class: "form-control", rows: 4, maxlength: 255 %>
+      <br>
+      <%= f.submit "Tweet", class: "btn btn-success btn-block" %>
+    <% end %>
+  </div>
+</div>
+
+<div id="stream">
+
+<% if @tweets.count > 0 %>
+  <% @tweets.each do |tweet| %>
+    <div class="tweet">
+      <div class="avatar">
+        <%= image_tag(tweet.user.avatar_url.to_s + ".png", size: "50x50", alt: "Profile picture") %>
+      </div>
+      <div class="info">
+        <%= link_to({controller: "users", action: "show", username: tweet.user.username}) do %>
+          <span class="username"><%= tweet.user.name %></span> <span class="poster">@<%= tweet.user.username %> &middot; </span>
+        <% end %>
+        <%= link_to(tweet,class: "poster" ) do %>
+          <%= time_ago_in_words(tweet.created_at) %> ago
+        <% end %>
+      </div>
+      <div class="content">
+        <%= truncate(tweet.content, :length => 150, :omission => "...") %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+ <br> <h3>There is no tweet, try following someone? </h3>
+<% end %>
+</div>

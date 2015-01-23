@@ -1,0 +1,43 @@
+
+<%= form_for(@user, :url => {:action => "update"}, :html => {class: "form-div"} ) do |f|  %>
+  <h1>Edit Profile Info</h1><br>
+  <% if @user.errors.any? %>
+  <div class="error">
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <label for="user_email">Email address</label>
+    <%= f.text_field :email, placeholder: "email", class: "form-control", disabled: "disabled" %>
+  </div>
+
+  <div class="form-group">
+    <label for="user_username">Username</label>
+    <%= f.text_field :username, placeholder: "username", class: "form-control", disabled: "disabled" %>
+  </div>
+
+  <div class="form-group">
+    <label for="user_name">Name</label>
+  <%= f.text_field :name, placeholder: "name", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="user_description">Description</label>
+  <%= f.text_field :description, placeholder: "describe yourself", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="user_password">New Password</label>
+  <%= f.password_field :password, placeholder: "password", class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <label for="user_username">Confirm password</label>
+  <%= f.password_field :password_confirmation, placeholder: "confirm password", class: "form-control" %>
+  </div>
+  <%= f.submit "Update Account", class: "btn btn-primary btn-block" %>
+<% end %>

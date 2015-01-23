@@ -12,4 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= bootstrap.min.css
+ *= bootstrap-theme.min.css
+ *= default.css
  */

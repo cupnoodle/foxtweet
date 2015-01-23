@@ -1,0 +1,24 @@
+<h2> I followed </h2><br>
+<% if @followeds && @followeds.count > 0 %>
+  <% @followeds.each do |followed| %>
+    <div class="userprofile">
+    <%= image_tag(followed.avatar_url.to_s + ".png", size: "128x128", alt: "Profile picture") %>
+      <%= link_to({:controller => "users", :action=> "show" , :username => followed.username}, {class: "name"}) do %> <%= followed.name %> <% end %> 
+      <br>
+      <%= link_to({:controller => "users", :action=> "show" , :username => followed.username}, {class: "username"}) do %>@<%= followed.username %> <% end %>
+      <br><br>
+      <% if followed.username != session[:username] %>
+        <%= form_for(followed, :method => :post, :url => {:action => 'follow', :username => followed.username}) do |f| %>
+          <% if !followed.followeds.include?(@myself) %>
+            <%= submit_tag('Follow', class: "btn btn-default") %>
+          <% else %>
+            <%= submit_tag('Unfollow', class: "btn btn-primary") %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+<% else %>
+ <span>Try following someone? &gt;w&lt;/</span>
+<% end %>

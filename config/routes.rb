@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+
+  root 'tweets#index'
+  get 'tweets', to: 'tweets#index'
+  get 'tweets/index'
+  get 'tweets/:id', to: 'tweets#show', as: 'tweet'
+  post 'tweets', to: 'tweets#create'
+  delete 'tweets/:id', to: 'tweets#destroy'
+  get 'users/login'
+  post 'users/login', to: 'users#attempt_login'
+  post 'users/create'
+  get 'users/edit', to: 'users#edit'
+  post 'users/edit', to: 'users#update'
+  get 'users/logout'
+  get 'profile/:username', to: 'users#show', as: 'user'
+  post 'follow/:username', to: 'users#follow'
+  match 'search', to: 'users#search', via: [:get, :post]
+  get 'profile/:username/follower', to: 'users#follower'
+  get 'profile/:username/following', to: 'users#following'
+  resources :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
