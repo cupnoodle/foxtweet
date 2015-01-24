@@ -25,11 +25,11 @@
     <% end %>
     <br><br>
     <b>
-      <%= link_to({action: "follower", username: session[:username]}, {style: "color: #222;"}) do %>
+      <%= link_to({action: "follower", username: @user.username}, {style: "color: #222;"}) do %>
         <%= pluralize(@user.followers.count, 'follower') %>
       <% end %>
     </b> 
-    <%= link_to({action: "following", username: session[:username]}, {style: "color: #222;"}) do %>
+    <%= link_to({action: "following", username: @user.username}, {style: "color: #222;"}) do %>
       <%= pluralize(@user.followeds.count, 'following') %>
     <% end %>
   </div>

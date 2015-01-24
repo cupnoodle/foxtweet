@@ -1,6 +1,6 @@
 <div class="tweet">
   <div class="post_avatar">
-    <%= image_tag("1.png", alt: "Profile picture") %>
+    <%= image_tag(@myself.avatar_url.to_s + ".png", alt: "Profile picture") %>
   </div>
   <div class="content">
     <%= form_for(:tweet, :url => {:action => "create"}, :html => {class: "form-div"} ) do |f|  %>

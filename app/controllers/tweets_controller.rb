@@ -9,6 +9,7 @@ class TweetsController < ApplicationController
     followed_users = current_user.followeds.pluck(:id)
     followed_users << current_user.id
 
+    @myself = current_user
     @tweets = Tweet.where(user_id: followed_users).latest.limit(10)
 
   end

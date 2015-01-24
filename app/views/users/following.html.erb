@@ -9,7 +9,7 @@
       <br><br>
       <% if followed.username != session[:username] %>
         <%= form_for(followed, :method => :post, :url => {:action => 'follow', :username => followed.username}) do |f| %>
-          <% if !followed.followeds.include?(@myself) %>
+          <% if !followed.followers.include?(@myself) %>
             <%= submit_tag('Follow', class: "btn btn-default") %>
           <% else %>
             <%= submit_tag('Unfollow', class: "btn btn-primary") %>
